@@ -1,0 +1,34 @@
+.root-wrapper{
+  min-height: 100vh;
+}
+
+main {
+  min-height: 85vh;
+}
+
+header {
+  position: relative;
+  height: 56px;
+}
+
+.navbar-brand,.brand {
+  font-family: 'Pacifico', cursive;
+}
+
+#auth {
+  min-height: 100vh;
+}
+
+.fade-in {
+  animation: fade-in 1.5s ease;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  
+}
