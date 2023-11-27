@@ -119,7 +119,7 @@ export default function ProductModal() {
           </div>
           {isCompleted ? (
             <div className="modal-body">
-              Product saved successfully
+              {detail ? 'Product updated successfully' : 'Product added successfully'}
             </div>
           ) : (
             <div className="modal-body">
