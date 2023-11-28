@@ -30,7 +30,7 @@ function LogOutModal() {
 
   return (
     <div className="modal fade" id="logOutModal" tabIndex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="logOutModalLabel">Sign Out</h1>

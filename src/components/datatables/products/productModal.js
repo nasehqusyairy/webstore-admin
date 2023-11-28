@@ -111,7 +111,7 @@ export default function ProductModal() {
 
   return (
     <div className="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
-      <div className={"modal-dialog modal-dialog-scrollable" + (isCompleted ? '' : ' modal-dialog-centered')}>
+      <div className={"modal-dialog modal-dialog-scrollable modal-dialog-centered"}>
         <form className="modal-content" onSubmit={handleOnSubmit}>
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="productModalLabel">{detail ? 'Edit' : 'Add Product'}</h1>

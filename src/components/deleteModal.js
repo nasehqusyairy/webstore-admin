@@ -44,7 +44,7 @@ export default function DeleteDataTableModal({ index, singular }) {
 
   return (
     <div className="modal fade" id="deleteDataTableModal" data-bs-backdrop='static' data-bs-keyboard='false' tabIndex="-1" >
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title text-capitalize" id="deleteDataTableModalLabel">Delete {singular}</h5>
