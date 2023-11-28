@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import http from "@/helpers/http";
 import ErrorMessage from "@/components/errorMessage";
 import { useDataTableState } from "@/context/DataTableContext";
+import updateData from "@/helpers/updateData";
+import storeData from "@/helpers/storeData";
 
 export function CategoryModalButton({ data }) {
 
@@ -49,41 +51,13 @@ export default function CategoryModal() {
     formData.append('name', name);
     formData.append('icon', icon);
 
-    const axiosConfig = {
-      headers: {
-        'Authorization': `Bearer ${globalState.token}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    }
+    const index = 'categories'
+    const singular = 'category'
 
-    if (detail) {
-      formData.append('_method', 'PUT');
-      http.post('/categories/' + detail.id, formData, axiosConfig).then(({ data }) => {
-        setIsCompleted(true)
-        const newState = { ...globalState };
-        newState.categories = newState.categories.map((category) => category.id === data.category.id ? data.category : category);
-        setGlobalState(newState);
-        setData(newState.categories)
-      }).catch(err => {
-        setError(err.response?.data.message || err.message)
-      }).finally(() => {
-        setIsSending(false);
-      })
+    const config = { formData, index, singular, globalState, setGlobalState, setData, setIsCompleted, setIsSending, setError, }
 
-    } else {
-      http.post('/categories', formData, axiosConfig).then(({ data }) => {
-        setIsCompleted(true)
-        resetForm()
-        const newState = { ...globalState };
-        newState.categories.push(data.category);
-        setGlobalState(newState);
-        setData(newState.categories)
-      }).catch(err => {
-        setError(err.response?.data.message || err.message)
-      }).finally(() => {
-        setIsSending(false);
-      })
-    }
+    if (detail) updateData({ ...config, detail })
+    else storeData({ ...config, resetForm })
   }
 
   return (

@@ -1,19 +1,19 @@
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
-import { CategoryModalButton } from "./categoryModal";
-import http from "@/helpers/http";
 import { useDataTableState } from "@/context/DataTableContext";
 import { DeleteDataTableModalButton } from "@/components/deleteModal";
 import refreshData from "@/helpers/refresh";
+import { SponsorModalButton } from "./sponsorModal";
+import PlaceholderImage from '@/img/product.jpg';
 
-export default function CategoriesTable() {
+export default function SponsorsTable() {
 
   const { globalState, setGlobalState, setError } = useRootState();
   const { data, setData, isFetching, setIsFetching } = useDataTableState();
 
   useEffect(() => {
-    const index = 'categories';
+    const index = 'sponsors';
     refreshData(index, globalState, setData, setIsFetching, setError, (resData) => {
       const newState = { ...globalState };
       newState[index] = resData[index];
@@ -36,25 +36,25 @@ export default function CategoriesTable() {
       selector: row => row.number,
     },
     {
-      name: 'Category Name',
+      name: 'Image',
       sortable: true,
-      selector: row => row.name,
+      cell: row => <img src={row.image || PlaceholderImage.src} alt={row.name} width="100" />,
     },
     {
-      name: 'Icon',
+      name: 'Name',
       sortable: true,
-      cell: row => <button className="btn btn-secondary btn-sm"><i className={"d-inline-block me-1 bi bi-" + row.icon}></i> {row.icon}</button>,
+      selector: row => row.name,
     },
     {
       name: 'Actions',
       cell: row => (
         <>
-          <CategoryModalButton data={row} />
+          <SponsorModalButton data={row} />
           <DeleteDataTableModalButton data={row} />
         </>
       )
     },
   ];
 
-  return <DataTable columns={columns} data={data.map((category, index) => { return { ...category, number: index + 1 } })} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
+  return <DataTable columns={columns} data={data.map((row, index) => { return { ...row, number: index + 1 } })} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
 }

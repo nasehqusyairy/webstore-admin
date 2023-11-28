@@ -41,6 +41,21 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div className="col-12 col-md-6 col-lg-4 mb-3">
+            <div className="card text-primary border-primary">
+              <div className="card-body">
+                <div className="row align-items-center">
+                  <div className="col border-end">
+                    <h3>Sponsors</h3>
+                    <p className="text-secondary">{globalState.sponsors?.length}</p>
+                  </div>
+                  <div className="col-4 text-center">
+                    <h1 className="bi bi-newspaper"></h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

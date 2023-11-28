@@ -30,10 +30,10 @@ function Navbar() {
                 <Link className="nav-link" href="/categories">Categories</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="/transactions">Transactions</Link>
+                <Link className="nav-link" href="/sponsors">Sponsors</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="/sponsors">Sponsors</Link>
+                <Link className="nav-link" href="/transactions">Transactions</Link>
               </li>
 
               <li className="nav-item dropdown">

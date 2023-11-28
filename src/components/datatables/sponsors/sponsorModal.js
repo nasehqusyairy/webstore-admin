@@ -1,39 +1,33 @@
 import { useRootState } from "@/context/RootStateContext";
-import { fromRupiah, toRupiah } from "@/helpers/rupiah";
 import { useEffect, useState } from "react";
-import PlaceholderImage from '@/img/product.jpg';
-import http from "@/helpers/http";
 import ErrorMessage from "@/components/errorMessage";
 import { useDataTableState } from "@/context/DataTableContext";
 import updateData from "@/helpers/updateData";
 import storeData from "@/helpers/storeData";
+import PlaceholderImage from '@/img/product.jpg';
 
-export function ProductModalButton({ data }) {
+export function SponsorModalButton({ data }) {
 
   const { setDetail } = useDataTableState();
 
   const handleOnclick = () => setDetail(data ? data : undefined)
 
   return (
-    <button onClick={handleOnclick} className={"btn me-1" + (data ? ' btn-warning btn-sm' : ' btn-primary')} data-bs-toggle="modal" data-bs-target="#productModal">
+    <button onClick={handleOnclick} className={"btn me-1" + (data ? ' btn-warning btn-sm' : ' btn-primary')} data-bs-toggle="modal" data-bs-target="#sponsorModal">
       {data ? <i className="bi bi-pencil"></i> : 'Add New'}
     </button>
   );
 }
 
-export default function ProductModal() {
+export default function SponsorModal() {
 
   const { globalState, setGlobalState, setError, error } = useRootState();
   const { detail, setDetail, setData } = useDataTableState();
 
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
   const [image, setImage] = useState();
   const [imageURL, setImageURL] = useState(PlaceholderImage.src);
   const [imageValue, setImageValue] = useState('');
-  const [price, setPrice] = useState('0');
-  const [discount, setDiscount] = useState('0');
-  const [stock, setStock] = useState(0);
   const [isSending, setIsSending] = useState(false);
 
   const [isCompleted, setIsCompleted] = useState(false);
@@ -41,11 +35,7 @@ export default function ProductModal() {
   useEffect(() => {
     if (detail) {
       setName(detail.name);
-      setCategory(detail.category.id);
       setImageURL(detail.image || PlaceholderImage.src);
-      setPrice(detail.price);
-      setDiscount(detail.discount);
-      setStock(detail.stock);
     } else {
       resetForm();
     }
@@ -53,13 +43,9 @@ export default function ProductModal() {
 
   const resetForm = () => {
     setName('');
-    setCategory('');
     setImage(undefined);
     setImageValue('');
     setImageURL(PlaceholderImage.src);
-    setPrice('0');
-    setDiscount('0');
-    setStock(0);
   }
 
   const handleOnSubmit = (e) => {
@@ -67,14 +53,10 @@ export default function ProductModal() {
     setIsSending(true);
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('category_id', category);
-    formData.append('image', image || '');
-    formData.append('price', price);
-    formData.append('discount', discount);
-    formData.append('stock', stock);
+    formData.append('image', image);
 
-    const index = 'products'
-    const singular = 'product'
+    const index = 'sponsors'
+    const singular = 'sponsor'
 
     const config = { formData, index, singular, globalState, setGlobalState, setData, setIsCompleted, setIsSending, setError, }
 
@@ -83,16 +65,16 @@ export default function ProductModal() {
   }
 
   return (
-    <div className="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
+    <div className="modal fade" id="sponsorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
       <div className={"modal-dialog modal-dialog-scrollable modal-dialog-centered"}>
         <form className="modal-content" onSubmit={handleOnSubmit}>
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="productModalLabel">{detail ? 'Edit' : 'Add Product'}</h1>
+            <h1 className="modal-title fs-5" id="sponsorModalLabel">{detail ? 'Edit' : 'Add Sponsor'}</h1>
             {isSending || (isCompleted || <button type="button" onClick={() => setDetail(undefined)} className="btn-close" data-bs-dismiss="modal"></button>)}
           </div>
           {isCompleted ? (
             <div className="modal-body">
-              {detail ? 'Product updated successfully' : 'Product added successfully'}
+              {detail ? 'Sponsor updated successfully' : 'Sponsor added successfully'}
             </div>
           ) : (
             <div className="modal-body">
@@ -112,28 +94,6 @@ export default function ProductModal() {
                 <label htmlFor="name" className="form-label">Name</label>
                 <input disabled={isSending} value={name} onChange={e => setName(e.target.value)} type="text" className="form-control" id="name" required />
               </div>
-              <div className="mb-3">
-                <label htmlFor="category" className="form-label">Category</label>
-                <select disabled={isSending} value={category} onChange={e => setCategory(e.target.value)} className="form-select" id="category" required>
-                  <option value=''>Select Categories</option>
-                  {globalState.categories?.map((category, i) => (
-                    <option key={i} value={category.id}>{category.name}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="price" className="form-label">Price</label>
-                <input disabled={isSending} value={toRupiah(price)} onChange={e => setPrice(fromRupiah(e.target.value !== 'Rp. ' ? e.target.value : '0'))} type="text" className="form-control" id="price" required />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="discount" className="form-label">Discount</label>
-                <input disabled={isSending} value={toRupiah(discount)} onChange={e => setDiscount(fromRupiah(e.target.value !== 'Rp. ' ? e.target.value : '0'))} type="text" className="form-control" id="discount" required />
-                {discount > price && <div className="form-text text-danger">Discount must be less than price</div>}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="stock" className="form-label">Stock</label>
-                <input disabled={isSending} value={stock} onChange={e => setStock(parseInt(e.target.value || 0).toString())} type="number" className="form-control" id="stock" required />
-              </div>
             </div>
           )}
           {isCompleted ? (
@@ -144,7 +104,7 @@ export default function ProductModal() {
           ) : (
             <div className="modal-footer">
               {isSending || <button type="button" onClick={resetForm} className="btn btn-secondary">Reset</button>}
-              <button disabled={isSending || discount > price} className="btn btn-primary">{isSending ? 'Saving...' : 'Save'}</button>
+              <button disabled={isSending} className="btn btn-primary">{isSending ? 'Saving...' : 'Save'}</button>
             </div>
           )}
         </form>
