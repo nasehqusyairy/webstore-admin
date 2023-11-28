@@ -2,7 +2,6 @@ import { useRootState } from "@/context/RootStateContext";
 import { fromRupiah, toRupiah } from "@/helpers/rupiah";
 import { useEffect, useState } from "react";
 import PlaceholderImage from '@/img/product.jpg';
-import http from "@/helpers/http";
 import ErrorMessage from "@/components/errorMessage";
 import { useDataTableState } from "@/context/DataTableContext";
 import updateData from "@/helpers/updateData";

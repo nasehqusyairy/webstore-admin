@@ -1,6 +1,5 @@
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect, useState } from "react";
-import http from "@/helpers/http";
 import ErrorMessage from "@/components/errorMessage";
 import { useDataTableState } from "@/context/DataTableContext";
 import updateData from "@/helpers/updateData";
