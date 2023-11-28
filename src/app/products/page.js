@@ -1,10 +1,10 @@
 'use client'
-import DeleteProductModal from '@/components/datatables/products/deleteModal';
 import ProductFilter from '@/components/datatables/products/filter';
 import ProductModal, { ProductModalButton } from '@/components/datatables/products/productModal';
 import RefreshButton from '@/components/datatables/products/refreshButton';
 import ProductsTable from '@/components/datatables/products/table';
-import ProductStateContainer from '@/context/ProductStateContext';
+import DeleteDataTableModal from '@/components/deleteModal';
+import DataTableStateContainer from '@/context/DataTableContext';
 
 function ProductsPage() {
   return (
@@ -12,7 +12,7 @@ function ProductsPage() {
       <div className="container">
         <h1>Products</h1>
         <hr />
-        <ProductStateContainer>
+        <DataTableStateContainer index={'products'}>
           <div className="row">
             <div className="col-12 mb-3">
               <div className="mb-3">
@@ -28,8 +28,8 @@ function ProductsPage() {
             </div>
           </div>
           <ProductModal></ProductModal>
-          <DeleteProductModal></DeleteProductModal>
-        </ProductStateContainer>
+          <DeleteDataTableModal index={'products'} singular={'product'}></DeleteDataTableModal>
+        </DataTableStateContainer>
       </div>
     </main>
   );

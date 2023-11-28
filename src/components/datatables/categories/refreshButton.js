@@ -7,7 +7,6 @@ export default function RefreshButton() {
 
   const refresh = () => {
     const newState = { ...globalState };
-    newState.products = undefined;
     newState.categories = undefined;
     setGlobalState(newState);
   }

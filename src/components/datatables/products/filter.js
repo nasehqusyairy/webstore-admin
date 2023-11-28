@@ -1,10 +1,10 @@
-import { useProductState } from "@/context/ProductStateContext";
+import { useDataTableState } from "@/context/DataTableContext";
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect, useState } from "react";
 
 function ProductFilter() {
   const { globalState } = useRootState()
-  const { setData } = useProductState();
+  const { setData } = useDataTableState();
   const [term, setTerm] = useState('');
   const [categories, setCategories] = useState(globalState.categories ? globalState.categories : []);
   const [selectedCategory, setSelectedCategory] = useState(0);

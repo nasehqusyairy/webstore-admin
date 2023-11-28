@@ -1,39 +1,39 @@
 import ErrorMessage from "@/components/errorMessage";
-import { useProductState } from "@/context/ProductStateContext";
+import { useDataTableState } from "@/context/DataTableContext";
 import { useRootState } from "@/context/RootStateContext";
 import http from "@/helpers/http";
 import { useState } from "react";
 
-export function DeleteProductModalButton({ data }) {
+export function DeleteDataTableModalButton({ data }) {
 
-  const { setDetail } = useProductState();
+  const { setDetail } = useDataTableState();
 
   const handleOnClick = () => setDetail(data)
 
   return (
-    <button onClick={handleOnClick} className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#deleteProductModal">
+    <button onClick={handleOnClick} className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#deleteDataTableModal">
       <i className="bi bi-trash"></i>
     </button>
   );
 }
 
-export default function DeleteProductModal() {
+export default function DeleteDataTableModal({ index, singular }) {
 
   const { globalState, setGlobalState, error, setError } = useRootState();
-  const { detail, setDetail, setData } = useProductState();
+  const { detail, setDetail, setData } = useDataTableState();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleOnclick = () => {
     setIsDeleting(true);
-    http.delete('/products/' + detail.id, {
+    http.delete(`/${index}/` + detail.id, {
       headers: {
         Authorization: `Bearer ${globalState.token}`
       }
     }).then(() => {
       const newState = { ...globalState };
-      newState.products = newState.products.filter((product) => product.id !== detail.id);
+      newState[index] = newState[index].filter((data) => data.id !== detail.id);
       setGlobalState(newState);
-      setData(newState.products);
+      setData(newState[index]);
     }).catch(err => {
       setError(err.response?.data.message || err.message);
     }).finally(() => {
@@ -43,14 +43,14 @@ export default function DeleteProductModal() {
   }
 
   return (
-    <div className="modal fade" id="deleteProductModal" data-bs-backdrop='static' data-bs-keyboard='false' tabIndex="-1" >
+    <div className="modal fade" id="deleteDataTableModal" data-bs-backdrop='static' data-bs-keyboard='false' tabIndex="-1" >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="deleteProductModalLabel">Delete Product</h5>
+            <h5 className="modal-title text-capitalize" id="deleteDataTableModalLabel">Delete {singular}</h5>
           </div>
           <div className="modal-body">
-            {error ? <ErrorMessage /> : (detail ? 'Are you sure you want to delete this product?' : 'Delete product successfully')}
+            {error ? <ErrorMessage /> : (detail ? `Are you sure you want to delete this ${singular}?` : `Delete ${singular} successfully`)}
           </div>
           {detail ? (
             <div className="modal-footer">

@@ -1,23 +1,26 @@
-import { useProductState } from "@/context/ProductStateContext";
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
 import { ProductModalButton } from "./productModal";
 import PlaceholderImage from '@/img/product.jpg';
-import { DeleteProductModalButton } from "./deleteModal";
+import refreshData from "@/helpers/refresh";
+import { useDataTableState } from "@/context/DataTableContext";
+import { DeleteDataTableModalButton } from "@/components/deleteModal";
 
 export default function ProductsTable() {
 
-  const { globalState } = useRootState();
-  const { data, setData, isFetching, setIsFetching } = useProductState();
+  const { globalState, setGlobalState, setError } = useRootState();
+  const { data, setData, isFetching, setIsFetching } = useDataTableState();
 
   useEffect(() => {
-    if (globalState.products === undefined) {
-      setIsFetching(true);
-    } else {
-      setIsFetching(false);
-      setData(globalState.products);
-    }
+    const index = 'products';
+    refreshData(index, globalState, setData, setIsFetching, setError, (resData) => {
+      const newState = { ...globalState };
+      newState[index] = resData[index];
+      newState.categories = resData.categories;
+      setGlobalState(newState)
+      setData(resData[index]);
+    });
   }, [globalState]);
 
   createTheme('weboender', {
@@ -71,7 +74,7 @@ export default function ProductsTable() {
       cell: row => (
         <>
           <ProductModalButton data={row} />
-          <DeleteProductModalButton data={row} />
+          <DeleteDataTableModalButton data={row} />
         </>
       )
     },

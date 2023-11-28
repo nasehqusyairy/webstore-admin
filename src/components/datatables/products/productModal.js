@@ -1,14 +1,14 @@
-import { useProductState } from "@/context/ProductStateContext";
 import { useRootState } from "@/context/RootStateContext";
 import { fromRupiah, toRupiah } from "@/helpers/rupiah";
 import { useEffect, useState } from "react";
 import PlaceholderImage from '@/img/product.jpg';
 import http from "@/helpers/http";
 import ErrorMessage from "@/components/errorMessage";
+import { useDataTableState } from "@/context/DataTableContext";
 
 export function ProductModalButton({ data }) {
 
-  const { setDetail } = useProductState();
+  const { setDetail } = useDataTableState();
 
   const handleOnclick = () => setDetail(data ? data : undefined)
 
@@ -22,7 +22,7 @@ export function ProductModalButton({ data }) {
 export default function ProductModal() {
 
   const { globalState, setGlobalState, setError, error } = useRootState();
-  const { detail, setDetail, setData } = useProductState();
+  const { detail, setDetail, setData } = useDataTableState();
 
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
