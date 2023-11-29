@@ -1,19 +1,17 @@
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
-import { CategoryModalButton } from "./categoryModal";
-import http from "@/helpers/http";
 import { useDataTableState } from "@/context/DataTableContext";
 import { DeleteDataTableModalButton } from "@/components/deleteModal";
 import refreshData from "@/helpers/refresh";
+import { ModalButton } from "@/components/fomModal";
 
-export default function CategoriesTable() {
+export default function CategoriesTable({ singular, index }) {
 
   const { globalState, setGlobalState, setError } = useRootState();
   const { data, setData, isFetching, setIsFetching } = useDataTableState();
 
   useEffect(() => {
-    const index = 'categories';
     refreshData(index, globalState, setData, setIsFetching, setError, (resData) => {
       const newState = { ...globalState };
       newState[index] = resData[index];
@@ -49,7 +47,7 @@ export default function CategoriesTable() {
       name: 'Actions',
       cell: row => (
         <>
-          <CategoryModalButton data={row} />
+          <ModalButton data={row} singular={singular} />
           <DeleteDataTableModalButton data={row} />
         </>
       )

@@ -45,7 +45,7 @@ function Navbar() {
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
-                  <li><Link className="dropdown-item" href="/cards">Credit/Debit</Link></li>
+                  <li><Link className="dropdown-item" href="/cards">Credit/Debit Cards</Link></li>
                   <li><Link className="dropdown-item" href="/addresses">Shipping Addresses</Link></li>
                   <li>
                     <hr className="dropdown-divider" />

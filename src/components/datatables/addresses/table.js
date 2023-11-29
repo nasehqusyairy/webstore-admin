@@ -1,13 +1,12 @@
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
-import PlaceholderImage from '@/img/product.jpg';
-import refreshData from "@/helpers/refresh";
 import { useDataTableState } from "@/context/DataTableContext";
 import { DeleteDataTableModalButton } from "@/components/deleteModal";
+import refreshData from "@/helpers/refresh";
 import { ModalButton } from "@/components/fomModal";
 
-export default function ProductsTable({ index, singular }) {
+export default function AddressesTable({ index, singular }) {
 
   const { globalState, setGlobalState, setError } = useRootState();
   const { data, setData, isFetching, setIsFetching } = useDataTableState();
@@ -16,7 +15,6 @@ export default function ProductsTable({ index, singular }) {
     refreshData(index, globalState, setData, setIsFetching, setError, (resData) => {
       const newState = { ...globalState };
       newState[index] = resData[index];
-      newState.categories = resData.categories;
       setGlobalState(newState)
       setData(resData[index]);
     });
@@ -33,51 +31,53 @@ export default function ProductsTable({ index, singular }) {
     {
       name: '#',
       sortable: true,
-      selector: row => row.number,
+      selector: row => row.num,
     },
     {
-      name: 'Image',
-      sortable: true,
-      cell: row => <img src={row.image || PlaceholderImage.src} alt={row.name} width="100" />,
-      selector: row => row.img,
-    },
-    {
-      name: 'Product Name',
+      name: 'Place Name',
       sortable: true,
       selector: row => row.name,
     },
     {
-      name: 'Category',
+      name: 'PO. Box Number',
       sortable: true,
-      selector: row => row.category.name,
+      selector: row => row.number,
     },
     {
-      name: 'Price',
+      name: 'Street Name',
       sortable: true,
-      cell: row => "Rp. " + row.price.toLocaleString("id-ID") + ",-",
-      selector: row => row.price,
+      selector: row => row.street,
     },
     {
-      name: 'Discount',
+      name: 'City',
       sortable: true,
-      cell: row => 'Rp. ' + row.discount.toLocaleString("id-ID") + ',-',
-      selector: row => row.discount,
+      selector: row => row.city,
     },
     {
-      name: 'Stock',
+      name: 'Province',
       sortable: true,
-      selector: row => row.stock,
+      selector: row => row.province,
+    },
+    {
+      name: 'Zip Code',
+      sortable: true,
+      selector: row => row.zipCode,
+    },
+    {
+      name: 'State',
+      sortable: true,
+      selector: row => row.state,
     },
     {
       name: 'Actions',
       cell: row => (
         <>
-          <ModalButton data={row} singular={singular} />
+          <ModalButton data={row} singular={singular}></ModalButton>
           <DeleteDataTableModalButton data={row} />
         </>
       )
     },
   ];
 
-  return <DataTable columns={columns} data={data.map((product, index) => { return { ...product, number: index + 1 } })} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
+  return <DataTable columns={columns} data={data.map((row, index) => { return { ...row, num: index + 1 } })} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
 }

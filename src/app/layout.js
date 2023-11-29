@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>Weboender Store | Client</title>
+        <title>Weboender Store | Admin</title>
 
         {/* Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

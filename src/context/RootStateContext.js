@@ -34,7 +34,8 @@ function RootStateContainer({ children }) {
           setError('You are not authorized to access this page')
           router.push('/auth')
         } else {
-          if (globalState.products === undefined && globalState.categories === undefined && globalState.sponsors === undefined) {
+          const keys = ['products', 'categories', 'sponsors', 'cards', 'addresses'];
+          if (keys.every(key => globalState[key] === undefined)) {
             http.get('/dashboard', {
               headers: {
                 Authorization: `Bearer ${globalState.token}`
@@ -42,16 +43,14 @@ function RootStateContainer({ children }) {
             }).then(({ data }) => {
               setGlobalState({
                 ...globalState,
-                products: data.products,
-                categories: data.categories,
-                sponsors: data.sponsors
-              })
-              setIsLoading(false)
+                ...data,
+              });
+              setIsLoading(false);
             }).catch(err => {
-              setError(err.response.data.message)
-            })
+              setError(err.response?.data.message || err.message);
+            });
           } else if (isLoading) {
-            setIsLoading(false)
+            setIsLoading(false);
           }
         }
       } else {

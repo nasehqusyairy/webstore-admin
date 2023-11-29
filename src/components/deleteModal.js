@@ -35,7 +35,7 @@ export default function DeleteDataTableModal({ index, singular }) {
       setGlobalState(newState);
       setData(newState[index]);
     }).catch(err => {
-      setError(err.response?.data.message || err.message);
+      setError((err.response?.data.message || err.message) + ` (${err.response?.status})`);
     }).finally(() => {
       setIsDeleting(false);
       setDetail(undefined);

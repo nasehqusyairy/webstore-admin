@@ -25,7 +25,7 @@ function LoginPage() {
       })
       .catch((err) => {
         console.log(err);
-        setError(err.response?.data.message || err.message)
+        setError((err.response?.data.message || err.message) + ` (${err.response?.status})`)
         setIsSending(false)
       })
   }

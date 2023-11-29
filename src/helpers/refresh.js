@@ -10,7 +10,7 @@ export default function refreshData(index, globalState, setData, setIsFetching, 
     }).then(({ data }) => {
       callback(data)
     }).catch(err => {
-      setError(err.response?.data.message || err.message)
+      setError((err.response?.data.message || err.message) + ` (${err.response?.status})`)
     }).finally(() => {
       setIsFetching(false);
     })

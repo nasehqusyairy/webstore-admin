@@ -4,16 +4,15 @@ import DataTable, { createTheme } from "react-data-table-component";
 import { useDataTableState } from "@/context/DataTableContext";
 import { DeleteDataTableModalButton } from "@/components/deleteModal";
 import refreshData from "@/helpers/refresh";
-import { SponsorModalButton } from "./sponsorModal";
 import PlaceholderImage from '@/img/product.jpg';
+import { ModalButton } from "@/components/fomModal";
 
-export default function SponsorsTable() {
+export default function SponsorsTable({ index, singular }) {
 
   const { globalState, setGlobalState, setError } = useRootState();
   const { data, setData, isFetching, setIsFetching } = useDataTableState();
 
   useEffect(() => {
-    const index = 'sponsors';
     refreshData(index, globalState, setData, setIsFetching, setError, (resData) => {
       const newState = { ...globalState };
       newState[index] = resData[index];
@@ -49,7 +48,7 @@ export default function SponsorsTable() {
       name: 'Actions',
       cell: row => (
         <>
-          <SponsorModalButton data={row} />
+          <ModalButton singular={singular} data={row} />
           <DeleteDataTableModalButton data={row} />
         </>
       )

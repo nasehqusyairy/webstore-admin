@@ -20,7 +20,7 @@ export default function updateData({ formData, index, singular, detail, globalSt
     setGlobalState(newState);
     setData(newState[index])
   }).catch(err => {
-    setError(err.response?.data.message || err.message)
+    setError((err.response?.data.message || err.message) + ` (${err.response?.status})`)
   }).finally(() => {
     setIsSending(false);
   })

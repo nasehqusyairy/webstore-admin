@@ -2,13 +2,16 @@ import { useDataTableState } from "@/context/DataTableContext";
 import { useRootState } from "@/context/RootStateContext";
 import { useEffect, useState } from "react";
 
-export default function SponsorFilter() {
+export default function FilterForm({ index, keys = 'name' }) {
   const { globalState } = useRootState()
   const { setData } = useDataTableState();
   const [term, setTerm] = useState('');
 
   useEffect(() => {
-    setData(globalState.sponsors.filter(sponsor => sponsor.name.toLowerCase().includes(term.toLowerCase())));
+    const searchKeys = Array.isArray(keys) ? keys : [keys];
+    setData(globalState[index]?.filter(item =>
+      searchKeys.some(key => item[key].toLowerCase().includes(term.toLowerCase()))
+    ));
   }, [term]);
 
   return (

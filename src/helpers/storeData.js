@@ -17,7 +17,7 @@ export default function storeData({ formData, index, singular, globalState, setG
     setGlobalState(newState);
     setData(newState[index])
   }).catch(err => {
-    setError(err.response?.data.message || err.message)
+    setError((err.response?.data.message || err.message) + ` (${err.response?.status})`)
   }).finally(() => {
     setIsSending(false);
   })
