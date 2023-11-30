@@ -34,7 +34,7 @@ function RootStateContainer({ children }) {
           setError('You are not authorized to access this page')
           router.push('/auth')
         } else {
-          const keys = ['products', 'categories', 'sponsors', 'cards', 'addresses'];
+          const keys = ['products', 'categories', 'sponsors', 'cards', 'addresses', 'shippings'];
           if (keys.every(key => globalState[key] === undefined)) {
             http.get('/dashboard', {
               headers: {

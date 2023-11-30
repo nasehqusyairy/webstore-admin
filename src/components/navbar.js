@@ -33,7 +33,10 @@ function Navbar() {
                 <Link className="nav-link" href="/sponsors">Sponsors</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="/transactions">Transactions</Link>
+                <Link className="nav-link" href="/shippings">Shippings</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" href="/orders">Orders</Link>
               </li>
 
               <li className="nav-item dropdown">
