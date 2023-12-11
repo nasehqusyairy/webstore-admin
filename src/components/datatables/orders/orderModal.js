@@ -5,37 +5,33 @@ import updateData from "@/helpers/updateData";
 import storeData from "@/helpers/storeData";
 import ModalLayout from "@/components/fomModal";
 
-export default function CategoryModal() {
+export default function OrderModal() {
 
-  const index = 'categories'
-  const singular = 'category'
+  const index = 'orders'
+  const singular = 'order'
 
   const { globalState, setGlobalState, setError } = useRootState();
   const { detail, setData, isSending, setIsSending, setIsCompleted } = useDataTableState();
 
-  const [name, setName] = useState('');
-  const [icon, setIcon] = useState('');
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     if (detail) {
-      setName(detail.name);
-      setIcon(detail.icon);
+      setStatus(detail.status);
     } else {
       resetForm();
     }
   }, [detail]);
 
   const resetForm = () => {
-    setName('');
-    setIcon('');
+    setStatus('');
   }
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     setIsSending(true);
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('icon', icon);
+    formData.append('status', status);
 
     const config = { formData, index, singular, globalState, setGlobalState, setData, setIsCompleted, setIsSending, setError, }
 
@@ -46,12 +42,13 @@ export default function CategoryModal() {
   return (
     <ModalLayout handleOnSubmit={handleOnSubmit} singular={singular}>
       <div className="mb-3">
-        <label htmlFor="name" className="form-label">Name</label>
-        <input disabled={isSending} value={name} onChange={e => setName(e.target.value)} type="text" className="form-control" id="name" required />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="icon" className="form-label">Icon</label>
-        <input disabled={isSending} value={icon} onChange={e => setIcon(e.target.value)} type="text" className="form-control" id="icon" required />
+        <label htmlFor="status" className="form-label">Status</label>
+        <select disabled={isSending} value={status} onChange={e => setStatus(e.target.value)} className="form-select" id="status" required>
+          <option value="">Change Status</option>
+          <option value="onprogress">On Progress</option>
+          <option value="sending">Sending</option>
+          <option value="completed">Completed</option>
+        </select>
       </div>
     </ModalLayout>
   );

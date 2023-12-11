@@ -23,7 +23,7 @@ function LogOutModal() {
           Authorization: `Bearer ${globalState.token}`
         }
       }
-    ).then(() => setIsLoggedOut(true))
+    ).catch(() => { }).finally(() => setIsLoggedOut(true))
   }
 
   const clearSession = () => setGlobalState({ user: null, token: null })

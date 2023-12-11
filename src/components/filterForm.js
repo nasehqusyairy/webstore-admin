@@ -10,7 +10,11 @@ export default function FilterForm({ index, keys = 'name' }) {
   useEffect(() => {
     const searchKeys = Array.isArray(keys) ? keys : [keys];
     setData(globalState[index]?.filter(item =>
-      searchKeys.some(key => item[key].toLowerCase().includes(term.toLowerCase()))
+      searchKeys.some(key => {
+        // console.log(item, key, item[key]);
+        return item[key].toString().toLowerCase().includes(term.toLowerCase())
+        // return []
+      })
     ));
   }, [term]);
 

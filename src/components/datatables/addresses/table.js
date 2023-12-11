@@ -61,7 +61,7 @@ export default function AddressesTable({ index, singular }) {
     {
       name: 'Zip Code',
       sortable: true,
-      selector: row => row.zipCode,
+      selector: row => row.zip_code,
     },
     {
       name: 'State',
@@ -79,5 +79,5 @@ export default function AddressesTable({ index, singular }) {
     },
   ];
 
-  return <DataTable columns={columns} data={data.map((row, index) => { return { ...row, num: index + 1 } })} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
+  return <DataTable columns={columns} data={data?.map((row, index) => { return { ...row, num: index + 1 } }) || []} progressComponent={'Please wait...'} progressPending={isFetching} paginationRowsPerPageOptions={[5, 10, 100]} paginationPerPage={5} theme='weboender' pagination />;
 }

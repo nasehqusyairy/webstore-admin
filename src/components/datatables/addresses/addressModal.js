@@ -26,7 +26,7 @@ export default function AddressModal() {
     if (detail) {
       setName(detail.name || '');
       setNumber(detail.number || '');
-      setZipCode(detail.zipCode || '');
+      setZipCode(detail.zip_code || '');
       setStreet(detail.street || '');
       setCity(detail.city || '');
       setProvince(detail.province || '');

@@ -5,6 +5,7 @@ import { useDataTableState } from "@/context/DataTableContext";
 import { DeleteDataTableModalButton } from "@/components/deleteModal";
 import refreshData from "@/helpers/refresh";
 import { ModalButton } from "@/components/fomModal";
+import { toRupiah } from "@/helpers/rupiah";
 
 export default function ShippingsTable({ singular, index }) {
 
@@ -42,16 +43,19 @@ export default function ShippingsTable({ singular, index }) {
       name: 'Internal Price',
       sortable: true,
       selector: row => row.internal_price,
+      cell: row => toRupiah(row.internal_price)
     },
     {
       name: 'External Price',
       sortable: true,
       selector: row => row.external_price,
+      cell: row => toRupiah(row.external_price)
     },
     {
       name: 'Overseas Price',
       sortable: true,
       selector: row => row.overseas_price,
+      cell: row => toRupiah(row.overseas_price)
     },
     {
       name: 'Actions',
