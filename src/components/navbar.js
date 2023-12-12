@@ -36,7 +36,7 @@ function Navbar() {
                 <Link className="nav-link" href="/shippings">Shippings</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="/orders">Orders</Link>
+                <Link className="nav-link" href="/transactions">Transactions</Link>
               </li>
 
               <li className="nav-item dropdown">
@@ -44,15 +44,7 @@ function Navbar() {
                   {globalState.user?.name}
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" href="/profile">My Profile</Link></li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li><Link className="dropdown-item" href="/cards">Credit/Debit Cards</Link></li>
-                  <li><Link className="dropdown-item" href="/addresses">Shipping Addresses</Link></li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
+                  <li><Link className="dropdown-item" href="/profile">Profile</Link></li>
                   <li><LogoutButton className="dropdown-item"></LogoutButton></li>
                 </ul>
               </li>

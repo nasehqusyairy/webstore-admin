@@ -79,7 +79,7 @@ export default function OrdersTable({ index, singular }) {
       name: 'Actions',
       cell: row => (
         <>
-          <Link className='btn btn-info btn-sm me-1' href={`/orders/${row.id}/`}><i className="bi bi-eye"></i></Link>
+          <Link className='btn btn-info btn-sm me-1' href={`/transactions/${row.id}/`}><i className="bi bi-eye"></i></Link>
           <ModalButton data={row} singular={singular} />
           <DeleteDataTableModalButton data={row} />
         </>
