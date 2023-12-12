@@ -4,6 +4,7 @@ import { useDataTableState } from "@/context/DataTableContext";
 import updateData from "@/helpers/updateData";
 import storeData from "@/helpers/storeData";
 import ModalLayout from "@/components/fomModal";
+// import axios from "axios";
 
 export default function CategoryModal() {
 
@@ -15,6 +16,17 @@ export default function CategoryModal() {
 
   const [name, setName] = useState('');
   const [icon, setIcon] = useState('');
+
+  // const [iconList, setIconList] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:8001/api/icons').then(({ data }) => {
+  //     setIconList(data);
+  //   }).catch((err) => {
+  //     setError((err.response?.data.message || err.message) + ` (${err.response?.status})`)
+  //   })
+
+  // }, []);
 
   useEffect(() => {
     if (detail) {
@@ -51,6 +63,9 @@ export default function CategoryModal() {
       </div>
       <div className="mb-3">
         <label htmlFor="icon" className="form-label">Icon</label>
+        {/* <select onChange={e => setIcon(e.target.value)} id="icon" className="form-select">
+          {iconList.map((icon, index) => <option key={index} value={icon.name}>{icon.name}</option>)}
+        </select> */}
         <input disabled={isSending} value={icon} onChange={e => setIcon(e.target.value)} type="text" className="form-control" id="icon" required />
       </div>
     </ModalLayout>
